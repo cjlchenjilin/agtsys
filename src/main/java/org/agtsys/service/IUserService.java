@@ -1,7 +1,7 @@
-package org.agtsys.dao;
+package org.agtsys.service;
 
 import org.agtsys.domain.User;
 
-public interface UserMapper {
+public interface IUserService {
 	User getUserByUser(User user);
 }

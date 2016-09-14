@@ -13,17 +13,18 @@
     <result column="isStart" property="isstart" jdbcType="INTEGER" />
     <result column="roleId" property="roleid" jdbcType="BIGINT" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    id, userCode, userName, userPassword, creationTime, lastLoginTime, createdBy, lastUpdateTime, 
-    isStart, roleId
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select 
-    <include refid="Base_Column_List" />
-    from as_user
-    where id = #{id,jdbcType=BIGINT}
+  <select id="getUserByUser" parameterType="User" resultType="User">
+  	select * from as_user 
+  	<where>
+  		<if test="usercode!=null">
+  			userCode = #{usercode}
+  		</if>
+  		<if test="userpassword!=null">
+  			and userpassword = #{userpassword}
+  		</if>
+  	</where>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from as_user
     where id = #{id,jdbcType=BIGINT}
   </delete>
@@ -149,5 +150,5 @@
       isStart = #{isstart,jdbcType=INTEGER},
       roleId = #{roleid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
-  </update>
+  </update> -->
 </mapper>

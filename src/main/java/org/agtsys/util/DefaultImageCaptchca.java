@@ -2,6 +2,8 @@ package org.agtsys.util;
 
 import java.io.OutputStream;
 
+import org.springframework.stereotype.Component;
+
 import com.github.bingoohuang.patchca.utils.encoder.EncoderHelper;
 
 public class DefaultImageCaptchca implements ImageCaptchca {

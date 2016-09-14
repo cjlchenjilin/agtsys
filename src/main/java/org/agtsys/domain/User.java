@@ -2,6 +2,8 @@ package org.agtsys.domain;
 
 import java.util.Date;
 
+import org.agtsys.util.MD5;
+
 public class User {
     private Long id;
 
@@ -50,9 +52,9 @@ public class User {
     public String getUserpassword() {
         return userpassword;
     }
-
+    //默认对密码实现md5加密
     public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword == null ? null : userpassword.trim();
+        this.userpassword = userpassword == null ? null : MD5.md5encode(userpassword.trim());
     }
 
     public Date getCreationtime() {

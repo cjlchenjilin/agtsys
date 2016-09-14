@@ -140,6 +140,21 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
 	</dependencies>
+	<build>
+		<finalName>agtsys</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<path>/agtsys</path>
+						<uriEncoding>utf-8</uriEncoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

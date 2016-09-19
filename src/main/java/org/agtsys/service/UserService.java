@@ -16,4 +16,8 @@ public class UserService implements IUserService {
 	public void setUserMapper(UserMapper userMapper) {
 		this.userMapper = userMapper;
 	}
+	@Override
+	public int updateUserByUser(User user) {
+		return userMapper.updateUserByUser(user);
+	}
 }

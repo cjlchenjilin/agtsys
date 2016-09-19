@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.agtsys.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="org.agtsys.domain.Permission" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="roleId" property="roleid" jdbcType="BIGINT" />
+    <result column="functionId" property="functionid" jdbcType="BIGINT" />
+    <result column="creationTime" property="creationtime" jdbcType="TIMESTAMP" />
+    <result column="createdBy" property="createdby" jdbcType="VARCHAR" />
+    <result column="lastUpdateTime" property="lastupdatetime" jdbcType="TIMESTAMP" />
+    <result column="isStart" property="isstart" jdbcType="INTEGER" />
+  </resultMap>
+	
+	<select id="getList" resultType="Permission" parameterType="Permission">
+		select * from as_role_premission 
+		<where>
+			<if test="roleid != null">
+				roleId = #{roleid}
+			</if>
+			<if test="isstart != null">
+				and isStart = #{isstart}
+			</if>
+		</where>  
+	</select>
+  
+  <!-- <insert id="insert" parameterType="org.agtsys.domain.Permission" >
+    insert into as_role_premission (id, roleId, functionId, 
+      creationTime, createdBy, lastUpdateTime, 
+      isStart)
+    values (#{id,jdbcType=BIGINT}, #{roleid,jdbcType=BIGINT}, #{functionid,jdbcType=BIGINT}, 
+      #{creationtime,jdbcType=TIMESTAMP}, #{createdby,jdbcType=VARCHAR}, #{lastupdatetime,jdbcType=TIMESTAMP}, 
+      #{isstart,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="org.agtsys.domain.Permission" >
+    insert into as_role_premission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="roleid != null" >
+        roleId,
+      </if>
+      <if test="functionid != null" >
+        functionId,
+      </if>
+      <if test="creationtime != null" >
+        creationTime,
+      </if>
+      <if test="createdby != null" >
+        createdBy,
+      </if>
+      <if test="lastupdatetime != null" >
+        lastUpdateTime,
+      </if>
+      <if test="isstart != null" >
+        isStart,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=BIGINT},
+      </if>
+      <if test="functionid != null" >
+        #{functionid,jdbcType=BIGINT},
+      </if>
+      <if test="creationtime != null" >
+        #{creationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null" >
+        #{lastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isstart != null" >
+        #{isstart,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.agtsys.domain.Permission" >
+    update as_role_premission
+    <set >
+      <if test="roleid != null" >
+        roleId = #{roleid,jdbcType=BIGINT},
+      </if>
+      <if test="functionid != null" >
+        functionId = #{functionid,jdbcType=BIGINT},
+      </if>
+      <if test="creationtime != null" >
+        creationTime = #{creationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdby != null" >
+        createdBy = #{createdby,jdbcType=VARCHAR},
+      </if>
+      <if test="lastupdatetime != null" >
+        lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isstart != null" >
+        isStart = #{isstart,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.agtsys.domain.Permission" >
+    update as_role_premission
+    set roleId = #{roleid,jdbcType=BIGINT},
+      functionId = #{functionid,jdbcType=BIGINT},
+      creationTime = #{creationtime,jdbcType=TIMESTAMP},
+      createdBy = #{createdby,jdbcType=VARCHAR},
+      lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+      isStart = #{isstart,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update> -->
+</mapper>

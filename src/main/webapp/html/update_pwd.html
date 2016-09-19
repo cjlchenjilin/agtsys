@@ -1,0 +1,43 @@
+<form method="post" id="update_pwd_form" class="formTable" action="">
+	<!-- 错误提示 -->
+	<div id="error" style="color: red;"></div>
+	<table>
+		<tr>
+			<th width="100" style="text-align: right">请输入原密码：</th>
+			<td><input id="old_pwd" type="text" name="userpassword"
+				class="easyui-validatebox" data-options="required:true" /></td>
+		</tr>
+		<tr>
+			<th width="100" style="text-align: right">请输入新密码：</th>
+			<td><input type="text" name="newpwd" id="newpwd"
+				class="easyui-validatebox" data-options="required:true" /></td>
+		</tr>
+		<tr>
+			<th style="text-align: right">请确认新密码：</th>
+			<td><input type="password" id="twopwd" name="twopwd"
+				class="easyui-validatebox" data-options="required:true" validType="equals['#newpwd']" /></td>
+		</tr>
+	</table>
+</form>
+<script type="text/javascript">
+	$(function() {
+		//失去焦点事件
+		$('#old_pwd').blur(function() {
+			var pwd = $(this).val();
+			if ($.trim(pwd)=="") {
+				$("#error").html("密码为空！！");
+			} else {
+				check_pwd(pwd);
+			}
+		});
+		//扩展2次输入是否相同
+		$.extend($.fn.validatebox.defaults.rules, {
+			equals : {
+				validator : function(value, param) {
+					return value == $(param[0]).val();
+				},
+				message : '2次密码输入不一致'
+			}
+		});
+	})
+</script>

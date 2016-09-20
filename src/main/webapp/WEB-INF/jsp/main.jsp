@@ -25,14 +25,17 @@
 
 	</div>
 	<div data-options="region:'south',title:'',split:false"
-		style="height: 100px; text-align: center; line-height: 98px;"><div>版权所有，XXXX公司，电话：88888888</div></div>
+		style="height: 50px; text-align: center; line-height: 48px;"><div>版权所有，XXXX公司，电话：88888888</div></div>
 	<div data-options="region:'west',title:'导航菜单',split:true"
 		style="width: 150px;">
 		<ul id="tt" class="easyui-tree">
 		</ul>
 	</div>
 	<div data-options="region:'center',title:''"
-		style="padding: 5px; background: #eee;"></div>
+		style="padding: 5px; background: #eee;">
+		<!-- 选项卡 -->
+		<div id="mainTabs" class="easyui-tabs" data-options="fit:true,border:false"></div>
+	</div>
 		<!-- 表单的容器 -->
 	<div id="formbox"></div>
 </body>

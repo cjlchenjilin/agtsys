@@ -34,8 +34,63 @@ $(function() {
 		}
 	});
 	//加载树形菜单
-	$('#tt').tree({method : "get",url:'main/tree'});
+	$('#tt').tree({method : "get",url:'main/tree',
+		onClick : function(node) {
+			// 通过这个node的属性获取到 url 然后加载到tabs这个插件里面 在在中间区域打开
+			// 通过 url = node.attributes.url
+			// 创建tabs
+			var url = "";
+			if (node.hasOwnProperty("attributes")
+					&& node.attributes.url) {
+				url = node.attributes.url;
+				$(node.target).addClass("links")// .attr("href",url);
+			}
+			// 自定义的一个方法
+			createTab({
+				title : node.text,
+				hasUrl : url,
+				content : '<iframe src="'
+						+ url
+						+ '" allowTransparency="true" style="border:0;width:100%;height:99%;" frameBorder="0"></iframe>'
+			});
+		}
+	});
 })
+// 创建一个tab函数
+function createTab(options) {
+	var Mtabs = $("#mainTabs");
+	var defaults = {
+		fit : true,
+		border : false,
+		closable : true,
+		selected : true,
+		content : "",
+		title : "",
+		tools : [ {
+			iconCls : 'icon-mini-refresh', // 刷新
+			handler : function() {
+				var tab = Mtabs.tabs('getSelected');
+				Mtabs.tabs('update', {
+					tab : tab,
+					options : {
+						href : ops.href
+					}
+				})
+			}
+		} ]
+	};
+	var ops = $.extend({}, defaults, options);// 扩展参数
+	if (ops.hasUrl == "") {
+		//$.messager.alert("提示", "请为该菜单绑定url", "error");
+		return;
+	}
+	//先判断是否存在，不存在就创建新的
+	if (Mtabs.tabs("exists", ops.title)) {
+		Mtabs.tabs("select", ops.title)
+	} else {
+		Mtabs.tabs('add', ops);
+	}
+}
 function modifypassword(){
 	//前提表单使用了validatebox插件
 	if ($("#update_pwd_form").form('validate')) {

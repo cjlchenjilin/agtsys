@@ -1,0 +1,52 @@
+<form action="" method="post" class="formTable"  id="addBoxForm">
+	<div id="tip"></div>
+    <table>
+        <tr>
+            <th width="100" style="text-align: right">角色名称：</th>
+            <td><input id="rolename" type="text" name="rolename"  class="easyui-validatebox" data-options="required:true"  > </td>
+        </tr>
+        <tr>
+            <th style="text-align: right">是否启用：</th>
+            <td>
+                <input type="radio" value="1" name="isstart" id="status1" checked/><label for="status1">启用</label>
+                <input type="radio" value="0" name="isstart" id="status2"/><label for="status2">禁用</label>
+            </td>
+        </tr>
+    </table>
+</form>
+<script type="text/javascript">
+$(function(){
+	$('#rolename').blur(
+		function(){
+			check_rolename($(this).val());
+	});
+})
+function check_rolename(rolename) {
+	var flag = false;
+		if (rolename != "") {
+			var $div_tip = $("#tip");
+			$.ajax({
+				url : 'role/check',
+				type : 'get',
+				data : {'rolename' : rolename},
+				dataType : 'json',
+				timeout : 5000,
+				async:false,
+				error : function() {
+					alert("error");
+				},
+				success : function(data) {
+					if (data.msg == "empty") {
+						$div_tip.html("<font color='red'> 角色名称为空！！</font>");
+					} else if (data.msg == "exist") {
+						$div_tip.html("<font color='red'>角色名称已存在！！</font>");
+					} else if (data.msg == "no_exist") {
+						$div_tip.html("<font color='green'>角色名称可以使用！！</font>");
+						flag = true;
+					}
+				}
+			});
+		}
+	return flag;
+}
+</script>

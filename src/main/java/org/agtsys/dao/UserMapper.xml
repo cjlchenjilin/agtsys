@@ -1,187 +1,160 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.agtsys.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="User" >
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="userCode" property="usercode" jdbcType="VARCHAR" />
-    <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="userPassword" property="userpassword" jdbcType="VARCHAR" />
-    <result column="creationTime" property="creationtime" jdbcType="TIMESTAMP" />
-    <result column="lastLoginTime" property="lastlogintime" jdbcType="TIMESTAMP" />
-    <result column="createdBy" property="createdby" jdbcType="VARCHAR" />
-    <result column="lastUpdateTime" property="lastupdatetime" jdbcType="TIMESTAMP" />
-    <result column="isStart" property="isstart" jdbcType="INTEGER" />
-    <result column="roleId" property="roleid" jdbcType="BIGINT" />
-  </resultMap>
-  <select id="getUserByUser" parameterType="User" resultType="User">
-  	select * from as_user 
-  	<where>
-  		<if test="usercode!=null">
-  			userCode = #{usercode}
-  		</if>
-  		<if test="userpassword!=null">
-  			and userpassword = #{userpassword}
-  		</if>
-  	</where>
-  </select>
-  <update id="updateUserByUser" parameterType="User" >
-    update as_user
-    <set >
-      <if test="usercode != null" >
-        userCode = #{usercode,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        userName = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null" >
-        userPassword = #{userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="creationtime != null" >
-        creationTime = #{creationtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastlogintime != null" >
-        lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdby != null" >
-        createdBy = #{createdby,jdbcType=VARCHAR},
-      </if>
-      <if test="lastupdatetime != null" >
-        lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isstart != null" >
-        isStart = #{isstart,jdbcType=INTEGER},
-      </if>
-      <if test="roleid != null" >
-        roleId = #{roleid,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <!-- <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from as_user
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  <insert id="insert" parameterType="org.agtsys.domain.User" >
-    insert into as_user (id, userCode, userName, 
-      userPassword, creationTime, lastLoginTime, 
-      createdBy, lastUpdateTime, isStart, 
-      roleId)
-    values (#{id,jdbcType=BIGINT}, #{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
-      #{userpassword,jdbcType=VARCHAR}, #{creationtime,jdbcType=TIMESTAMP}, #{lastlogintime,jdbcType=TIMESTAMP}, 
-      #{createdby,jdbcType=VARCHAR}, #{lastupdatetime,jdbcType=TIMESTAMP}, #{isstart,jdbcType=INTEGER}, 
-      #{roleid,jdbcType=BIGINT})
-  </insert>
-  <insert id="insertSelective" parameterType="org.agtsys.domain.User" >
-    insert into as_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="usercode != null" >
-        userCode,
-      </if>
-      <if test="username != null" >
-        userName,
-      </if>
-      <if test="userpassword != null" >
-        userPassword,
-      </if>
-      <if test="creationtime != null" >
-        creationTime,
-      </if>
-      <if test="lastlogintime != null" >
-        lastLoginTime,
-      </if>
-      <if test="createdby != null" >
-        createdBy,
-      </if>
-      <if test="lastupdatetime != null" >
-        lastUpdateTime,
-      </if>
-      <if test="isstart != null" >
-        isStart,
-      </if>
-      <if test="roleid != null" >
-        roleId,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="usercode != null" >
-        #{usercode,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null" >
-        #{userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="creationtime != null" >
-        #{creationtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastlogintime != null" >
-        #{lastlogintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdby != null" >
-        #{createdby,jdbcType=VARCHAR},
-      </if>
-      <if test="lastupdatetime != null" >
-        #{lastupdatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isstart != null" >
-        #{isstart,jdbcType=INTEGER},
-      </if>
-      <if test="roleid != null" >
-        #{roleid,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="org.agtsys.domain.User" >
-    update as_user
-    <set >
-      <if test="usercode != null" >
-        userCode = #{usercode,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null" >
-        userName = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="userpassword != null" >
-        userPassword = #{userpassword,jdbcType=VARCHAR},
-      </if>
-      <if test="creationtime != null" >
-        creationTime = #{creationtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastlogintime != null" >
-        lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createdby != null" >
-        createdBy = #{createdby,jdbcType=VARCHAR},
-      </if>
-      <if test="lastupdatetime != null" >
-        lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isstart != null" >
-        isStart = #{isstart,jdbcType=INTEGER},
-      </if>
-      <if test="roleid != null" >
-        roleId = #{roleid,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="org.agtsys.domain.User" >
-    update as_user
-    set userCode = #{usercode,jdbcType=VARCHAR},
-      userName = #{username,jdbcType=VARCHAR},
-      userPassword = #{userpassword,jdbcType=VARCHAR},
-      creationTime = #{creationtime,jdbcType=TIMESTAMP},
-      lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
-      createdBy = #{createdby,jdbcType=VARCHAR},
-      lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
-      isStart = #{isstart,jdbcType=INTEGER},
-      roleId = #{roleid,jdbcType=BIGINT}
-    where id = #{id,jdbcType=BIGINT}
-  </update> -->
+<mapper namespace="org.agtsys.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="User">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="userCode" property="usercode" jdbcType="VARCHAR" />
+		<result column="userName" property="username" jdbcType="VARCHAR" />
+		<result column="userPassword" property="userpassword" jdbcType="VARCHAR" />
+		<result column="creationTime" property="creationtime" jdbcType="TIMESTAMP" />
+		<result column="lastLoginTime" property="lastlogintime"
+			jdbcType="TIMESTAMP" />
+		<result column="createdBy" property="createdby" jdbcType="VARCHAR" />
+		<result column="lastUpdateTime" property="lastupdatetime"
+			jdbcType="TIMESTAMP" />
+		<result column="isStart" property="isstart" jdbcType="INTEGER" />
+		<result column="roleId" property="roleid" jdbcType="BIGINT" />
+	</resultMap>
+	<select id="getUserByUser" parameterType="User" resultType="User">
+		select * from as_user
+		<where>
+			<if test="usercode!=null">
+				userCode = #{usercode}
+			</if>
+			<if test="userpassword!=null">
+				and userpassword = #{userpassword}
+			</if>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		</where>
+	</select>
+	<select id="getUserList" resultType="User">
+		select u.*,r.roleName as roleName from as_user u,as_role r where
+		u.roleId = r.id
+		<if test="user.username != null">
+			and u.userName like CONCAT('%',#{user.username},'%')
+		</if>
+		<if test="user.usercode != null">
+			and u.userCode like CONCAT('%',#{user.usercode},'%')
+		</if>
+		<if test="user.roleid != null">
+			and u.roleId = #{user.roleid}
+		</if>
+		<if test="user.isstart != null">
+			and u.isStart = #{user.isstart}
+		</if>
+		order by creationTime desc
+		<if test="pt != null">
+			limit #{pt.begin},#{pt.size}
+		</if>
+	</select>
+	<select id="getCount" resultType="int" parameterType="User">
+		select count(1) from as_user
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="username != null">
+				and userName like CONCAT('%',#{username},'%')
+			</if>
+			<if test="usercode != null">
+				and userCode like CONCAT('%',#{usercode},'%')
+			</if>
+			<if test="roleid != null">
+				and roleId = #{roleid}
+			</if>
+			<if test="isstart != null">
+				and isStart = #{isstart}
+			</if>
+		</trim>
+	</select>
+	<update id="updateUserByUser" parameterType="User">
+		update as_user 
+		<set>
+			<if test="usercode != null">
+				userCode = #{usercode,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				userName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="userpassword != null">
+				userPassword = #{userpassword,jdbcType=VARCHAR},
+			</if>
+			<if test="creationtime != null">
+				creationTime = #{creationtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastlogintime != null">
+				lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdby != null">
+				createdBy = #{createdby,jdbcType=VARCHAR},
+			</if>
+			<if test="lastupdatetime != null">
+				lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isstart != null">
+				isStart = #{isstart,jdbcType=INTEGER},
+			</if>
+			<if test="roleid != null">
+				roleId = #{roleid,jdbcType=BIGINT},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 返回新增的id -->
+	<insert id="addUser" useGeneratedKeys="true" keyColumn="id"
+		keyProperty="id" parameterType="User">
+		insert into as_user (userCode,userName,userPassword,creationTime,
+		lastLoginTime,createdBy,lastUpdateTime,isStart,roleId
+		)
+		values (
+		#{usercode},#{username},#{userpassword},#{creationtime},#{lastlogintime},
+		#{createdby},#{lastupdatetime},#{isstart},#{roleid}
+		)
+		<selectKey keyProperty="id" resultType="long" order="AFTER">
+			SELECT LAST_INSERT_ID() as id
+		</selectKey>
+	</insert>
+	<delete id="deleteUser" parameterType="User">
+		delete from as_user where id = #{id}
+	</delete>
+	<!-- <insert id="insert" parameterType="org.agtsys.domain.User" > insert 
+		into as_user (id, userCode, userName, userPassword, creationTime, lastLoginTime, 
+		createdBy, lastUpdateTime, isStart, roleId) values (#{id,jdbcType=BIGINT}, 
+		#{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+		#{creationtime,jdbcType=TIMESTAMP}, #{lastlogintime,jdbcType=TIMESTAMP}, 
+		#{createdby,jdbcType=VARCHAR}, #{lastupdatetime,jdbcType=TIMESTAMP}, #{isstart,jdbcType=INTEGER}, 
+		#{roleid,jdbcType=BIGINT}) </insert> <insert id="insertSelective" parameterType="org.agtsys.domain.User" 
+		> insert into as_user <trim prefix="(" suffix=")" suffixOverrides="," > <if 
+		test="id != null" > id, </if> <if test="usercode != null" > userCode, </if> 
+		<if test="username != null" > userName, </if> <if test="userpassword != null" 
+		> userPassword, </if> <if test="creationtime != null" > creationTime, </if> 
+		<if test="lastlogintime != null" > lastLoginTime, </if> <if test="createdby 
+		!= null" > createdBy, </if> <if test="lastupdatetime != null" > lastUpdateTime, 
+		</if> <if test="isstart != null" > isStart, </if> <if test="roleid != null" 
+		> roleId, </if> </trim> <trim prefix="values (" suffix=")" suffixOverrides="," 
+		> <if test="id != null" > #{id,jdbcType=BIGINT}, </if> <if test="usercode 
+		!= null" > #{usercode,jdbcType=VARCHAR}, </if> <if test="username != null" 
+		> #{username,jdbcType=VARCHAR}, </if> <if test="userpassword != null" > #{userpassword,jdbcType=VARCHAR}, 
+		</if> <if test="creationtime != null" > #{creationtime,jdbcType=TIMESTAMP}, 
+		</if> <if test="lastlogintime != null" > #{lastlogintime,jdbcType=TIMESTAMP}, 
+		</if> <if test="createdby != null" > #{createdby,jdbcType=VARCHAR}, </if> 
+		<if test="lastupdatetime != null" > #{lastupdatetime,jdbcType=TIMESTAMP}, 
+		</if> <if test="isstart != null" > #{isstart,jdbcType=INTEGER}, </if> <if 
+		test="roleid != null" > #{roleid,jdbcType=BIGINT}, </if> </trim> </insert> 
+		<update id="updateByPrimaryKeySelective" parameterType="org.agtsys.domain.User" 
+		> update as_user <set > <if test="usercode != null" > userCode = #{usercode,jdbcType=VARCHAR}, 
+		</if> <if test="username != null" > userName = #{username,jdbcType=VARCHAR}, 
+		</if> <if test="userpassword != null" > userPassword = #{userpassword,jdbcType=VARCHAR}, 
+		</if> <if test="creationtime != null" > creationTime = #{creationtime,jdbcType=TIMESTAMP}, 
+		</if> <if test="lastlogintime != null" > lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP}, 
+		</if> <if test="createdby != null" > createdBy = #{createdby,jdbcType=VARCHAR}, 
+		</if> <if test="lastupdatetime != null" > lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP}, 
+		</if> <if test="isstart != null" > isStart = #{isstart,jdbcType=INTEGER}, 
+		</if> <if test="roleid != null" > roleId = #{roleid,jdbcType=BIGINT}, </if> 
+		</set> where id = #{id,jdbcType=BIGINT} </update> <update id="updateByPrimaryKey" 
+		parameterType="org.agtsys.domain.User" > update as_user set userCode = #{usercode,jdbcType=VARCHAR}, 
+		userName = #{username,jdbcType=VARCHAR}, userPassword = #{userpassword,jdbcType=VARCHAR}, 
+		creationTime = #{creationtime,jdbcType=TIMESTAMP}, lastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP}, 
+		createdBy = #{createdby,jdbcType=VARCHAR}, lastUpdateTime = #{lastupdatetime,jdbcType=TIMESTAMP}, 
+		isStart = #{isstart,jdbcType=INTEGER}, roleId = #{roleid,jdbcType=BIGINT} 
+		where id = #{id,jdbcType=BIGINT} </update> -->
 </mapper>

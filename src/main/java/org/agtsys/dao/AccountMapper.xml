@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.agtsys.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="Account" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="moneyBak" property="moneybak" jdbcType="DOUBLE" />
+  </resultMap>
+  <select id="getAccountList" parameterType="Account">
+  	select * from as_account
+  </select>
+  <select id="getAccount" resultType="Account" parameterType="Account">
+		select * from as_account where userId = #{userid}
+	</select>
+ <insert id="addAccount" parameterType="Account">
+ 	insert into as_account (userId,money,moneyBak) values (#{userid},#{money},#{moneybak})
+ </insert>
+ <update id ="updateAccount" parameterType="Account">
+		update as_account
+			 <set>
+				 <if test="money != null">  money = #{money},</if>
+				 <if test="moneybak != null"> moneyBak = #{moneybak}</if>
+		     </set>
+		  	where userId = #{userid}
+	</update>
+ <delete id="deleteAccount" parameterType="Account">
+ 	delete from as_account where userId = #{userid} 
+ </delete>
+</mapper>

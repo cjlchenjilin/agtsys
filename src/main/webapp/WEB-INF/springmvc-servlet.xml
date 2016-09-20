@@ -9,12 +9,13 @@
      http://www.springframework.org/schema/mvc 
      http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 	
-	<context:component-scan base-package="org.agtsys.util,org.agtsys.service,org.agtsys.controller"></context:component-scan>
+	<context:component-scan base-package="org.agtsys.controller">
+        <!-- <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/> -->
+    </context:component-scan>
 	<mvc:annotation-driven></mvc:annotation-driven>
 	<bean  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
-	<bean id="captchca" class="org.agtsys.util.DefaultImageCaptchca">
-	</bean>
+	
 </beans>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.agtsys.dao.SystemconfigMapper" >
+  <resultMap id="BaseResultMap" type="Systemconfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="configType" property="configtype" jdbcType="INTEGER" />
+    <result column="configTypeName" property="configtypename" jdbcType="VARCHAR" />
+    <result column="configTypeValue" property="configtypevalue" jdbcType="INTEGER" />
+    <result column="configValue" property="configvalue" jdbcType="VARCHAR" />
+    <result column="isStart" property="isstart" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="getSystemconfigList" resultType="Systemconfig">
+		select * from as_systemconfig
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="systemconfig.isstart != null">
+				and isStart = #{systemconfig.isstart}
+			</if>
+			<if test="systemconfig.configtype != null">
+				and configType = #{systemconfig.configtype}
+			</if>
+		</trim>
+		<if test="pt != null">
+			limit #{pt.begin},#{pt.size}
+		</if>
+	</select>
+	
+	<select id="getSystemconfig" resultType="Systemconfig" parameterType="Systemconfig">
+		select * from as_Systemconfig 
+		<trim prefix="where" prefixOverrides="and | or">
+			<if test="configtype != null">
+				and configType = #{configtype}
+			</if>
+			<if test="configtypename != null">
+				and configTypeName = #{configtypename}
+			</if>
+			<if test="id != null">
+				and id = #{id}
+			</if>
+		 </trim>
+	</select>
+	<select id="getMaxTypeValueByType" resultType="int">
+		select max(configTypeValue) from as_systemconfig where configType = #{type}
+	</select>
+	<insert id="addSystemconfig" parameterType="Systemconfig" >
+		 insert  into `as_systemconfig`(`configType`,`configTypeName`,`configTypeValue`,`configValue`,`isStart`) values
+		  (
+		 		#{configtype},#{configtypename},#{configtypevalue},#{configvalue},#{isstart}
+		  )
+	</insert>
+	
+	<update id ="updateSystemconfig" parameterType="Systemconfig">
+		 update as_Systemconfig
+			 <set>
+				<if test="configtype != null"> configType = #{configtype},</if>		
+				<if test="configtypename != null"> configTypeName = #{configtypename},</if>		
+				<if test="configtypevalue != null"> configTypeValue = #{configtypevalue},</if>		
+				<if test="configvalue != null"> configValue = #{configvalue},</if>		
+				<if test="isstart != null"> isStart = #{isstart}</if>		
+			</set>
+		  	where id = #{id}
+	</update>
+	
+	<delete id ="deleteSystemconfig" parameterType="Systemconfig">
+		delete from as_Systemconfig where id = #{id}
+	</delete>
+	
+	<select id="getCount" resultType="int" parameterType="Systemconfig">
+		select count(1) from as_Systemconfig
+		<where>
+			<if test="configtype != null"> configType = #{configtype}</if>		
+			<if test="configtypename != null"> and configTypeName = #{configtypename}</if>		
+			<if test="configtypevalue != null"> and configTypeValue = #{configtypevalue}</if>		
+			<if test="configvalue != null"> and configValue = #{configvalue}</if>		
+			<if test="isstart != null"> and isStart = #{isstart}</if>	
+		</where>
+	</select>
+</mapper>

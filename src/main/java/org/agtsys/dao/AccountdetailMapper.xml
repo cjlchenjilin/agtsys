@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.agtsys.dao.AccountdetailMapper" >
+  <resultMap id="BaseResultMap" type="Accountdetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="userId" property="userid" jdbcType="BIGINT" />
+    <result column="detailType" property="detailtype" jdbcType="BIGINT" />
+    <result column="detailTypeName" property="detailtypename" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="accountMoney" property="accountmoney" jdbcType="DOUBLE" />
+    <result column="memo" property="memo" jdbcType="CHAR" />
+    <result column="detailDateTime" property="detaildatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="getCount" resultType="int" parameterType="Accountdetail">
+		select count(1) from as_accountdetail
+		<trim prefix="where" prefixOverrides="and | or">
+		 <if test=" userid != null">
+			and userId = #{userid}
+		 </if>
+		 <if test=" detailtype != null">
+				and detailType = #{detailtype}
+		</if>
+		<if test="starttime != null">
+			and detailDateTime >= #{starttime}
+		</if>
+		<if test="endtime != null">
+			and detailDateTime &lt;= #{endtime}
+		</if>
+		 </trim>
+	</select>
+
+	<select  id="repostAgentDetail" resultType="Accountdetail" parameterType="Accountdetail">
+	select detail.*,user.userName from as_accountdetail as detail,as_user as user 
+ 	<trim prefix="where" prefixOverrides="and | or">
+			and user.id = detail.userId 
+			<if test="starttime != null and endtime != null">
+				and detail.detailDateTime >= #{starttime} 
+				and #{endtime} >= detail.detailDateTime
+			</if>
+			<if test="starttime != null and endtime == null">
+				and detail.detailDateTime >= #{starttime} 
+			</if>
+			<if test="endtime != null and starttime == null">
+				and #{endtime} >= detail.detailDateTime
+			</if>
+		</trim>
+	order by detail.userId asc, detail.detailDateTime asc
+	</select>
+
+	<select id="getAccountdetailList" resultType="Accountdetail">
+		select detail.*,user.userName from as_accountdetail as detail,as_user as user 
+		<trim prefix="where" prefixOverrides="and | or">		
+			and user.id = detail.userId 		
+			<if test="accountdetail.userid != null">
+				and detail.userId = #{accountdetail.userid}
+			</if>
+			<if test=" accountdetail.detailtype != null">
+				and detail.detailType = #{accountdetail.detailtype}
+			</if>
+			<if test="accountdetail.starttime != null">
+				and detail.detailDateTime >= #{accountdetail.starttime}
+			</if>
+			<if test="accountdetail.endtime != null">
+				and detail.detailDateTime &lt;= #{accountdetail.endtime}
+			</if>
+			order by detail.detailDateTime desc 
+			<if test="pt != null">
+				limit #{pt.begin},#{pt.size}
+			</if>		
+		</trim>
+	</select>
+	
+	<insert id="addAccountdetail" parameterType="Accountdetail" >
+		 insert into as_accountdetail (userId,detailType,detailTypeName,money,
+		 	accountMoney,memo,detailDateTime) values 
+		 	(#{userid},#{detailtype},#{detailtypename},
+		 	#{money},#{accountmoney},#{memo},#{detaildatetime})
+	</insert>
+	
+	<update id ="updateAccountdetail" parameterType="Accountdetail">
+		update as_accountdetail set
+		 <trim prefix="where" prefixOverrides=",">
+			 <set>
+				 <if test="detailtype != null">  detailType = #{detailtype},</if>
+				 <if test="detailtypename != null"> detailTypeName = #{detailtypename},</if>
+				 <if test="money != null">  money = #{money},</if>
+				 <if test="accountmoney != null"> accountMoney = #{accountmoney},</if>
+				 <if test="memo != null">  memo = #{memo},</if>
+				 <if test="detaildatetime != null"> detailDateTime = #{detaildatetime}</if>
+		     </set>
+		  	where userId = #{userid}
+		 </trim>
+	</update>
+	
+	<delete id ="deleteAccountdetail" parameterType="Accountdetail">
+		delete from as_accountdetail where userId = #{userid}
+	</delete>
+</mapper>

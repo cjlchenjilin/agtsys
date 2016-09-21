@@ -4,3 +4,7 @@ target/
 .project
 .classpath
 .settings/
+# ignore root file
+/*.png
+/*.gif
+/*.jpg
